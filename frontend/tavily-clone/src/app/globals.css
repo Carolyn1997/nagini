@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Background colors using light blue tint */
+    --background: 210 77% 95%;
+    --foreground: 217 38% 20%;
+
+    /* Card colors with medium blue tint */
+    --card: 217 28% 98%;
+    --card-foreground: 217 38% 20%;
+
+    /* Popover with same theme */
+    --popover: 217 28% 98%;
+    --popover-foreground: 217 38% 20%;
+
+    /* Primary colors using #3E5988 blue */
+    --primary: 217 38% 39%;
+    --primary-foreground: 210 40% 98%;
+
+    /* Secondary colors using #4F678D */
+    --secondary: 217 28% 43%;
+    --secondary-foreground: 210 40% 98%;
+
+    /* Muted colors with light blue */
+    --muted: 210 77% 90%;
+    --muted-foreground: 217 28% 43%;
+
+    /* Accent colors using #7BB6EC */
+    --accent: 210 77% 70%;
+    --accent-foreground: 217 38% 20%;
+
+    /* Destructive remains red but muted */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Border and input colors with medium blue tint */
+    --border: 217 28% 85%;
+    --input: 217 28% 85%;
+    --ring: 217 38% 39%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Dark mode colors with deep blue base */
+    --background: 217 38% 15%;
+    --foreground: 210 40% 98%;
+
+    --card: 217 38% 17%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 217 38% 17%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Using lighter blue for primary in dark mode */
+    --primary: 210 77% 70%;
+    --primary-foreground: 217 38% 20%;
+
+    --secondary: 217 28% 43%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 38% 25%;
+    --muted-foreground: 210 77% 80%;
+
+    --accent: 217 38% 39%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 38% 25%;
+    --input: 217 38% 25%;
+    --ring: 210 77% 70%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .hero-gradient {
+    background-color: hsl(210 77% 95%);
+    background-image:
+      linear-gradient(rgba(123, 182, 236, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(123, 182, 236, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-gradient::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(90deg, 
+      hsl(210 77% 95%) 0%, 
+      hsla(210, 77%, 95%, 0.5) 50%, 
+      hsla(210, 77%, 95%, 0) 100%
+    );
+    z-index: 1;
+  }
+
+  .bg-grid-white {
+    background-image: linear-gradient(to right, rgba(123, 182, 236, 0.1) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(123, 182, 236, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+}
+
+/* Add custom font for the site */
+@font-face {
+  font-family: 'Inter';
+  src: url('https://ext.same-assets.com/4122264722/3775959694.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('https://ext.same-assets.com/4122264722/4150784660.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* Main Layout */
+.main-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.hero-section {
+  position: relative;
+  padding: 6rem 0;
+  overflow: hidden;
+}
+
+.code-block {
+  background-color: hsl(217 38% 15%);
+  border-radius: var(--radius);
+  padding: 1rem;
+  font-family: monospace;
+  color: hsl(210 40% 98%);
+  position: relative;
+  border: 1px solid hsl(217 38% 25%);
+}
+
+.testimonial-card {
+  background-color: hsl(210 77% 95%);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  border: 1px solid hsl(217 28% 85%);
+  box-shadow: 0 4px 6px rgba(79, 103, 141, 0.05);
+}
+
+/* Add new component styles */
+.glass-card {
+  background-color: hsl(210 77% 95% / 0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid hsl(217 28% 85% / 0.5);
+  border-radius: var(--radius);
+}
+
+.glass-card:hover {
+  background-color: hsl(210 77% 95% / 0.7);
+  border-color: hsl(217 38% 39% / 0.3);
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, 
+    hsl(210 77% 95%) 0%,
+    hsl(217 28% 90%) 50%,
+    hsl(210 77% 95%) 100%
+  );
+}
