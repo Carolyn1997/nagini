@@ -9,6 +9,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
 
 const testimonials = [
   {
@@ -57,21 +60,36 @@ const userFeedback = [
 ];
 
 const TestimonialsSection = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   return (
-    <section className="py-8 md:py-12 lg:py-16 bg-background" id="testimonials">
+    <section className="py-8 md:py-12 lg:py-16 bg-background" id="testimonials" ref={ref}>
       <div className="main-container">
-        <div className="text-center mb-16">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8 }}
+        >
           <h2 className="text-xl md:text-3xl font-bold mb-2 text-[#B7A187]">Testimonials</h2>
           <h3 className="text-2xl font-bold text-foreground mt-4 lg:mt-8 px-4 lg:px-16">
             Nagini is trusted by AI leaders around the world
           </h3>
-        </div>
+        </motion.div>
 
         {/* Testimonials Skeleton */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
           {[1, 2].map((item) => (
-            <div
+            <motion.div
               key={item}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
               className="glass-card p-8 hover:shadow-lg transition-all duration-300 flex flex-col"
             >
               {/* Quote skeleton */}
@@ -84,59 +102,69 @@ const TestimonialsSection = () => {
               {/* Author info skeleton */}
               <div className="flex items-center">
                 <div className="mr-4">
-                  <div className="w-[50px] h-[50px] rounded-full bg-gray-200 "></div>
+                  <div className="w-[50px] h-[50px] rounded-full bg-gray-200"></div>
                 </div>
                 <div className="space-y-2">
                   <div className="h-4 bg-gray-200 rounded w-32"></div>
                   <div className="h-3 bg-gray-200 rounded w-24"></div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* What our users say */}
-        <div className="mb-16 hidden">
+        <motion.div 
+          className="mb-16 hidden"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
           <h3 className="text-2xl font-bold mb-8 text-center">What our users say</h3>
 
           <Carousel className="w-full">
             <CarouselContent>
               {userFeedback.map((item, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 h-full">
-                  <Card>
-                    <CardContent className="p-6">
-                      <div className="mb-4">
-                        <p className="text-gray-600">"{item.quote}"</p>
-                      </div>
-                      <div className="flex items-center">
-                        <div className="mr-3">
-                          <Image
-                            src={item.avatar}
-                            alt={item.author}
-                            width={40}
-                            height={40}
-                            className="rounded-full"
-                          />
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Card>
+                      <CardContent className="p-6">
+                        <div className="mb-4">
+                          <p className="text-gray-600">"{item.quote}"</p>
                         </div>
-                        <div>
-                          <h4 className="font-bold text-sm">{item.author}</h4>
-                          <div className="flex items-center">
-                            <span className="text-gray-500 text-xs">{item.handle}</span>
+                        <div className="flex items-center">
+                          <div className="mr-3">
                             <Image
-                              src={item.platform === "twitter"
-                                ? "https://ext.same-assets.com/4122264722/3695124275.svg"
-                                : "https://ext.same-assets.com/4122264722/3661595502.svg"
-                              }
-                              alt={item.platform}
-                              width={14}
-                              height={14}
-                              className="ml-1 w-3 h-3"
+                              src={item.avatar}
+                              alt={item.author}
+                              width={40}
+                              height={40}
+                              className="rounded-full"
                             />
                           </div>
+                          <div>
+                            <h4 className="font-bold text-sm">{item.author}</h4>
+                            <div className="flex items-center">
+                              <span className="text-gray-500 text-xs">{item.handle}</span>
+                              <Image
+                                src={item.platform === "twitter"
+                                  ? "https://ext.same-assets.com/4122264722/3695124275.svg"
+                                  : "https://ext.same-assets.com/4122264722/3661595502.svg"
+                                }
+                                alt={item.platform}
+                                width={14}
+                                height={14}
+                                className="ml-1 w-3 h-3"
+                              />
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -145,7 +173,7 @@ const TestimonialsSection = () => {
               <CarouselNext className="static ml-2 translate-y-0" />
             </div>
           </Carousel>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

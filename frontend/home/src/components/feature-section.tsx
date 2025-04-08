@@ -3,28 +3,43 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
 
 const FeatureSection = () => {
-  // const videoRef = useRef<HTMLVideoElement>(null);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  // useEffect(() => {
-  //   if (videoRef.current) {
-  //     videoRef.current.play().catch(error => {
-  //       console.error("Error playing the video:", error);
-  //     });
-  //   }
-  // }, []);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
 
   return (
-    <section className="py-8 md:py-12 lg:py-16 bg-background" id="features">
+    <section className="py-8 md:py-12 lg:py-16 bg-background" id="features" ref={ref}>
       <div className="main-container">
-        <div className="text-center mb-16">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8 }}
+        >
           <h2 className="text-xl md:text-3xl font-bold mb-2 text-[#B7A187]">Features</h2>
           <h3 className="text-2xl font-bold text-foreground mt-4 lg:mt-8 px-4 lg:px-16">
             Cross-platform Collaboration
             Facilitate interoperability between different trading platforms, allowing agents to collaborate and exchange data seamlessly.
           </h3>
-        </div>
+        </motion.div>
 
         {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center mb-20">
           <div className="bg-black rounded-xl overflow-hidden aspect-video relative">
@@ -53,17 +68,30 @@ const FeatureSection = () => {
           </div>
         </div> */}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          <div className="glass-card !bg-primary/20 p-8 flex flex-col">
+        <motion.div 
+          className="grid grid-cols-1 sm:grid-cols-2 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          <motion.div 
+            className="glass-card !bg-primary/20 p-8 flex flex-col"
+            variants={itemVariants}
+            whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+          >
             <div className="flex items-center mb-4">
-              <div className="mr-4">
+              <motion.div 
+                className="mr-4"
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.6 }}
+              >
                 <Image
                   src="https://ext.same-assets.com/4122264722/1248550479.svg"
                   alt="Real-time web access"
                   width={40}
                   height={40}
                 />
-              </div>
+              </motion.div>
               <h3 className="text-xl font-bold text-foreground">Agent Ecosystem</h3>
             </div>
             <p className="text-muted-foreground mb-6">
@@ -77,18 +105,26 @@ const FeatureSection = () => {
                 Ecosystem
               </Link>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="glass-card !bg-primary/20  p-8 flex flex-col">
+          <motion.div 
+            className="glass-card !bg-primary/20 p-8 flex flex-col"
+            variants={itemVariants}
+            whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+          >
             <div className="flex items-center mb-4">
-              <div className="mr-4">
+              <motion.div 
+                className="mr-4"
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.6 }}
+              >
                 <Image
                   src="https://ext.same-assets.com/4122264722/1248550479.svg"
                   alt="Plug and play"
                   width={40}
                   height={40}
                 />
-              </div>
+              </motion.div>
               <h3 className="text-xl font-bold text-foreground">Performance Analytics Dashboard</h3>
             </div>
             <p className="text-muted-foreground mb-6">
@@ -102,8 +138,8 @@ const FeatureSection = () => {
                 Dashboard
               </Link>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
